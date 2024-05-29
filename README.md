@@ -6,7 +6,7 @@ Prevent DOM XSS. Page-wide/centrally, instead of trying to manually find and fix
 
 Demo: https://codepen.io/hchiam/pen/mdYOZOP?editors=0010
 
-Requires browser support and [CSP (Content-Security-Policy)](https://github.com/hchiam/learning-csp) to turn on `trustedTypes`:
+Requires browser support and [CSP (Content Security Policy)](https://github.com/hchiam/learning-csp) to turn on `trustedTypes`:
 
 ```html
 <head>
