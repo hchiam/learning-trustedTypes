@@ -2,7 +2,7 @@
 
 Just one of the things I'm learning. https://github.com/hchiam/learning
 
-Prevent DOM XSS.
+Prevent DOM XSS. Page-wide/centrally, instead of trying to manually find and fix all XSS sinks.
 
 Demo: https://codepen.io/hchiam/pen/mdYOZOP?editors=0010
 
