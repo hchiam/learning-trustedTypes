@@ -2,13 +2,13 @@
 
 Just one of the things I'm learning. https://github.com/hchiam/learning
 
-`trustedTypes` lets you block and handle DOM XSS in one spot. Instead of trying to manually find and fix each individual XSS sink. You can also listen for violations with `securitypolicyviolation`. And report violations to a URL with a `report-uri` in the [CSP](https://github.com/hchiam/learning-csp) header.
+`trustedTypes` lets you block and handle DOM XSS in one spot. Instead of trying to manually find and fix each individual XSS sink. You can also listen for violations with `securitypolicyviolation`. And report violations to a URL with a `report-uri` in the [CSP](https://github.com/hchiam/learning-csp) header. See all of this in the code snippets below.
 
 Demo: https://codepen.io/hchiam/pen/mdYOZOP?editors=0010
 
 Browser support: https://developer.mozilla.org/en-US/docs/Web/API/Trusted_Types_API#browser_compatibility
 
-## 1) Turn on `trustedTypes` so vulnerable inputs require `TrustedHTML`
+## PART 1) Turn on `trustedTypes` so vulnerable inputs require `TrustedHTML`
 
 To turn on `trustedTypes`, you need [browser support](https://developer.mozilla.org/en-US/docs/Web/API/Trusted_Types_API#browser_compatibility) and [CSP (Content Security Policy)](https://github.com/hchiam/learning-csp):
 
@@ -18,15 +18,15 @@ To turn on `trustedTypes`, you need [browser support](https://developer.mozilla.
 </head>
 ```
 
-Now all DOM XSS violations are blocked, and vulnerable inputs require `TrustedHTML` for the browser to know to trust them! See the policy objects below for how to provide `TrustedHTML`.
+Now all DOM XSS violations are blocked in JavaScript, and vulnerable inputs require `TrustedHTML` for the browser to know to trust them! See the policy objects in PART 2 for how to provide `TrustedHTML`.
 
-### Detect browser support for `trustedTypes` in JavaScript
+### Detect browser support for `trustedTypes` in JS
 
 ```js
 const supported = window.trustedTypes;
 ```
 
-### Now trigger a violation to see if it gets blocked
+### Now trigger a violation in JS to see if it gets blocked
 
 ```js
 try {
@@ -38,9 +38,9 @@ try {
 }
 ```
 
-and now that all violations get blocked, you can:
+and now that all such violations get blocked, you can:
 
-## 2) Sanitize and wrap inputs in `TrustedHTML`s, in one place
+## PART 2) Sanitize and wrap inputs in `TrustedHTML`s, in one place
 
 Policy objects can be created to generate `TrustedHTML` to tell the browser that the input is safe.
 
@@ -54,12 +54,13 @@ if (window.trustedTypes?.createPolicy) {
         // do something
       }
       return value.replace(/\</g, '&lt;');
+      // this sanitized string will get wrapped in a TrustedHTML
     },
-    createScript: (value, type, source) => value,
-    createScriptURL: (value, type, source) => value,
+    createScript: (value, type, source) => value, // gets wrapped in a TrustedHTML
+    createScriptURL: (value, type, source) => value, // gets wrapped in a TrustedHTML
   });
 
-  // call our escapeHTMLPolicy object to sanitize a string:
+  // call our escapeHTMLPolicy object to sanitize a string and wrap it in a TrustedHTML:
   const escaped = escapeHTMLPolicy.createHTML('<img src=x onerror=alert(1)>');
   el.innerHTML = escaped; // '&lt;img src=x onerror=alert(1)>'
   console.log(escaped instanceof TrustedHTML); // true
@@ -76,7 +77,7 @@ if (window.trustedTypes?.createPolicy) {
 }
 ```
 
-## 3) Set up an event to trigger for and report security violations
+## PART 3) Set up an event to trigger for and report security violations
 
 ```js
 document.addEventListener('securitypolicyviolation', (e) => {
