@@ -81,6 +81,8 @@ if (window.trustedTypes?.createPolicy) {
 
 ## PART 3) Set up an event to trigger for and report security violations
 
+Since `trustedTypes` is turned on, you can listen for `securitypolicyviolation`s:
+
 ```js
 document.addEventListener('securitypolicyviolation', (e) => {
   console.log('\n\nDetected securitypolicyviolation:');
