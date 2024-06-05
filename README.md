@@ -8,9 +8,11 @@ Demo: https://codepen.io/hchiam/pen/mdYOZOP?editors=0010
 
 Browser support: https://developer.mozilla.org/en-US/docs/Web/API/Trusted_Types_API#browser_compatibility
 
+There's an official polyfill (use the full version for enforcement and throwing): https://github.com/w3c/trusted-types?tab=readme-ov-file#polyfill and here's a quick test demo of that polyfill: https://w3c.github.io/trusted-types/demo/
+
 ## PART 1) Turn on `trustedTypes` so vulnerable inputs require `TrustedHTML`
 
-To turn on `trustedTypes`, you need [browser support](https://developer.mozilla.org/en-US/docs/Web/API/Trusted_Types_API#browser_compatibility) and [CSP (Content Security Policy)](https://github.com/hchiam/learning-csp):
+To turn on `trustedTypes`, you need [browser support](https://developer.mozilla.org/en-US/docs/Web/API/Trusted_Types_API#browser_compatibility) (or a [polyfill](https://github.com/w3c/trusted-types?tab=readme-ov-file#polyfill)) and [CSP (Content Security Policy)](https://github.com/hchiam/learning-csp):
 
 ```html
 <head>
